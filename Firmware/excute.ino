@@ -8,6 +8,7 @@ void runModule(int device)
   int distance;
   int type;
   int slot;
+  int extId;
   switch(device)
   {
     case MOTOR:
@@ -38,7 +39,7 @@ void runModule(int device)
             int speed_value = readShort(8);
             int distance_value = readShort(10);
             encoders[slot-1].setSpeed(speed_value);
-            int extId = readBuffer(3);
+            extId = readBuffer(3);
             encoders[slot-1].move(distance_value,onEncoderMovingFinish,extId);
           }
         }
@@ -51,7 +52,7 @@ void runModule(int device)
             int speed_value = readShort(8);
             int position_value = readShort(10);
             encoders[slot-1].setSpeed(speed_value);
-            int extId = readBuffer(3);
+            extId = readBuffer(3);
             encoders[slot-1].moveTo(position_value,onEncoderMovingFinish,extId);
           }
         }
@@ -75,22 +76,21 @@ void runModule(int device)
         switch(type){
           case STEPPER_BOARD_RUN:
             speed = readShort(8);
-            steppers[port-1] = MeStepper(port);
             steppers[port-1].setSpeed(speed);
           break;
           case STEPPER_BOARD_MOVE:
             speed = readShort(8);
             distance = readShort(10);
-            steppers[port-1] = MeStepper(port);
+            extId = readBuffer(3);
             steppers[port-1].setSpeed(speed);
-            steppers[port-1].move(distance);
+            steppers[port-1].move(distance,onStepperMovingFinish,extId);
           break;
           case STEPPER_BOARD_MOVE_TO:
             speed = readShort(8);
             position = readShort(10);
-            steppers[port-1] = MeStepper(port);
+            extId = readBuffer(3);
             steppers[port-1].setSpeed(speed);
-            steppers[port-1].moveTo(position);
+            steppers[port-1].moveTo(position,onStepperMovingFinish,extId);
           break;
         }
       } 

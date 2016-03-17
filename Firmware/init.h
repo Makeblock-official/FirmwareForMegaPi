@@ -15,7 +15,7 @@ MeHumiture humiture;
 MeFlameSensor FlameSensor;
 MeGasSensor GasSensor;
 MeSerial mySerial(PORT_9);
-MeStepper steppers[4];
+MeStepperOnBoard steppers[4];
 MeEncoderOnBoard encoders[4];
 long encodersPosition[4] = {0,0,0,0};
 long steppersPosition[4] = {0,0,0,0};

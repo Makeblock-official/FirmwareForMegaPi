@@ -27,8 +27,8 @@ void setup()
   Serial.print("Version: ");
   Serial.println(mVersion);
   encodersInit();
+  steppersInit();
   delay(100);
-  
 }
 void loop()
 {

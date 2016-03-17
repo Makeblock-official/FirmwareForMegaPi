@@ -38,7 +38,8 @@ void runModule(int device)
             int speed_value = readShort(8);
             int distance_value = readShort(10);
             encoders[slot-1].setSpeed(speed_value);
-            encoders[slot-1].move(distance_value,&onEncoderMovingFinish);
+            int extId = readBuffer(3);
+            encoders[slot-1].move(distance_value,onEncoderMovingFinish,extId);
           }
         }
         break;
@@ -50,7 +51,8 @@ void runModule(int device)
             int speed_value = readShort(8);
             int position_value = readShort(10);
             encoders[slot-1].setSpeed(speed_value);
-            encoders[slot-1].moveTo(position_value,&onEncoderMovingFinish);
+            int extId = readBuffer(3);
+            encoders[slot-1].moveTo(position_value,onEncoderMovingFinish,extId);
           }
         }
         break;

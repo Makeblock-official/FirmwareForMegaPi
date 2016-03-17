@@ -24,10 +24,12 @@ void encodersUpdate()
     encoders[i].update();
   }
 }
-void onEncoderMovingFinish(int slot)
+void onEncoderMovingFinish(int slot,int extId)
 {
-  Serial.print("onFinish:");
-  Serial.println(slot);
+  writeHead();
+  writeSerial(extId);
+  sendByte(slot);
+  writeEnd();
 }
 void PWM_Calcu()
 {

@@ -160,7 +160,7 @@ void parseData(void)
     case RUN:
       {
         runModule(device);
-        callOK();
+        //callOK();
       }
       break;
     case RESET:

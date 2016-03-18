@@ -19,14 +19,14 @@ void runModule(int device)
       }
       break;
     case ENCODER_BOARD:
-      type = readBuffer(7);
+      slot = readBuffer(7);
+      type = readBuffer(8);
       switch(type){
         case ENCODER_BOARD_RUN:
         {
           if(port == 0)
           {
-            slot = readBuffer(7);
-            int speed_value = readShort(8);
+            int speed_value = readShort(9);
             encoders[slot-1].runSpeed(speed_value);
           }
         }
@@ -35,9 +35,8 @@ void runModule(int device)
         {
           if(port == 0)
           {
-            slot = readBuffer(7);
-            int speed_value = readShort(8);
-            int distance_value = readShort(10);
+            int speed_value = readShort(9);
+            int distance_value = readShort(11);
             encoders[slot-1].setSpeed(speed_value);
             extId = readBuffer(3);
             encoders[slot-1].move(distance_value,onEncoderMovingFinish,extId);
@@ -48,9 +47,8 @@ void runModule(int device)
         {
           if(port == 0)
           {
-            slot = readBuffer(7);
-            int speed_value = readShort(8);
-            int position_value = readShort(10);
+            int speed_value = readShort(9);
+            int position_value = readShort(11);
             encoders[slot-1].setSpeed(speed_value);
             extId = readBuffer(3);
             encoders[slot-1].moveTo(position_value,onEncoderMovingFinish,extId);
@@ -91,6 +89,12 @@ void runModule(int device)
             extId = readBuffer(3);
             steppers[port-1].setSpeed(speed);
             steppers[port-1].moveTo(position,onStepperMovingFinish,extId);
+          break;
+          case STEPPER_BOARD_SETTING:
+            int microsteps = readBuffer(8);
+            int acceleration = readShort(9);
+            steppers[port-1].setMicroStep(microsteps);
+            steppers[port-1].setAcceleration(acceleration);
           break;
         }
       } 
@@ -540,49 +544,40 @@ void readSensor(int device)
         {
           slot = readBuffer(7);
           uint8_t read_type = readBuffer(8);
-          if(slot == SLOT_1)
+          switch(read_type)
           {
-            if(read_type == ENCODER_BOARD_POS)
+            case ENCODER_BOARD_POS:
             {
-              sendLong(encoders[0].GetPulsePos());
+              sendLong(encoders[slot-1].GetPulsePos());
             }
-            else if(read_type == ENCODER_BOARD_SPEED)
+            break;
+            case ENCODER_BOARD_SPEED:
             {
-              sendFloat(encoders[0].GetCurrentSpeed());
+              sendFloat(encoders[slot-1].GetCurrentSpeed());
             }
+            break;
           }
-          else if(slot == SLOT_2)
+        }
+      }
+      break;
+    case STEPPER_BOARD:
+      {
+        if(port == 0)
+        {
+          slot = readBuffer(7);
+          uint8_t read_type = readBuffer(8);
+          switch(read_type)
           {
-            if(read_type == ENCODER_BOARD_POS)
+            case STEPPER_BOARD_POS:
             {
-              sendLong(encoders[1].GetPulsePos());
+              sendLong(steppers[slot-1].currentPosition());
             }
-            else if(read_type == ENCODER_BOARD_SPEED)
+            break;
+            case STEPPER_BOARD_SPEED:
             {
-              sendFloat(encoders[1].GetCurrentSpeed());
+              sendFloat(steppers[slot-1].speed());
             }
-          }
-          else if(slot == SLOT_3)
-          {
-            if(read_type == ENCODER_BOARD_POS)
-            {
-              sendLong(encoders[2].GetPulsePos());
-            }
-            else if(read_type == ENCODER_BOARD_SPEED)
-            {
-              sendFloat(encoders[2].GetCurrentSpeed());
-            }
-          }
-          else if(slot == SLOT_4)
-          {
-            if(read_type == ENCODER_BOARD_POS)
-            {
-              sendLong(encoders[3].GetPulsePos());
-            }
-            else if(read_type == ENCODER_BOARD_SPEED)
-            {
-              sendFloat(encoders[3].GetCurrentSpeed());
-            }
+            break;
           }
         }
       }

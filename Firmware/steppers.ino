@@ -7,7 +7,6 @@ void steppersInit()
   steppers[2] = MeStepperOnBoard(SLOT3);
   steppers[3] = MeStepperOnBoard(SLOT4);
   for(int i=0;i<4;i++){
-    steppers[i].setSpeed(2000);
     steppers[i].setMaxSpeed(10000);
     steppers[i].setAcceleration(10000);
     steppers[i].setMicroStep(16);
@@ -21,7 +20,9 @@ void steppersUpdate()
 }
 void onStepperMovingFinish(int slot,int extId)
 {
-  Serial.print("stepper:");
-  Serial.println(slot);
+  writeHead();
+  writeSerial(extId);
+  sendByte(slot);
+  writeEnd();
 }
 

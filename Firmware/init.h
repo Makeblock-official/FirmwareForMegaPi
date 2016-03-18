@@ -115,6 +115,7 @@ boolean isAvailable = false;
   #define ENCODER_BOARD_RUN  0x01
   #define ENCODER_BOARD_MOVE 0x02
   #define ENCODER_BOARD_MOVE_TO 0x03
+  #define ENCODER_BOARD_SETTING 0x04
   //Read type
   #define ENCODER_BOARD_POS    0x01
   #define ENCODER_BOARD_SPEED  0x02
@@ -124,6 +125,7 @@ boolean isAvailable = false;
   #define STEPPER_BOARD_RUN  0x01
   #define STEPPER_BOARD_MOVE 0x02
   #define STEPPER_BOARD_MOVE_TO 0x03
+  #define STEPPER_BOARD_SETTING 0x04
   //Read type
   #define STEPPER_BOARD_POS    0x01
   #define STEPPER_BOARD_SPEED  0x02

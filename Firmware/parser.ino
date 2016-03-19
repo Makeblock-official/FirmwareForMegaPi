@@ -77,18 +77,9 @@ void writeBuffer(int index,unsigned char c)
 }
 void writeSerial(unsigned char c)
 {
-  if(BluetoothSource == DATA_SERIAL)
-  {
-    Serial.write(c);;
-  }
-  else if(BluetoothSource == DATA_SERIAL2)
-  {
-    Serial2.write(c);;
-  }
-  else if(BluetoothSource == DATA_SERIAL3)
-  {
-    Serial3.write(c);;
-  }
+  Serial.write(c);
+  Serial2.write(c);
+  Serial3.write(c);
 }
 
 void readSerial(void)
@@ -101,13 +92,15 @@ void readSerial(void)
     BluetoothSource = DATA_SERIAL;
     serialRead = Serial.read();
   }
-  else if(Serial2.available() > 0)
+  
+ if(Serial2.available() > 0)
   {
     isAvailable = true;
     BluetoothSource = DATA_SERIAL2;
     serialRead = Serial2.read();
   }
-  else if(Serial3.available() > 0)
+  
+ if(Serial3.available() > 0)
   {
     isAvailable = true;
     BluetoothSource = DATA_SERIAL3;
@@ -122,18 +115,9 @@ void writeHead(void)
 
 void writeEnd(void)
 {
-  if(BluetoothSource == DATA_SERIAL)
-  {
     Serial.println();
-  }
-  else if(BluetoothSource == DATA_SERIAL2)
-  {
     Serial2.println();
-  }
-  else if(BluetoothSource == DATA_SERIAL3)
-  {
     Serial3.println();
-  }
 }
 
 

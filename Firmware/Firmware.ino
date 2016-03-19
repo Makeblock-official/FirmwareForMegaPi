@@ -17,9 +17,6 @@
 #include "init.h"
 //#define DEBUG_INFO
 String mVersion = "0e.01.101";
-void onF(int port,int ext){
-  
-}
 void setup()
 {
   delay(5);

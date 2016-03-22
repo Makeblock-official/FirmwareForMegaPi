@@ -212,12 +212,14 @@ void runModule(int device)
         if(ledMx.getPort()!=port)
         {
           ledMx.reset(port);
+          ledMx.setBrightness(6);
+          ledMx.setColorIndex(1);
         }
         int action = readBuffer(7);
         if(action==1)
         {
-          int px = buffer[8];
-          int py = buffer[9];
+          int px = readBuffer(8);
+          int py = readBuffer(9);
           int len = readBuffer(10);
           char *s = readString(11,len);
           ledMx.drawStr(px,py,s);

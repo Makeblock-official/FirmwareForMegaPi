@@ -4,8 +4,8 @@ void runModule(int device)
   int port = readBuffer(6);
   int pin = port;
   int speed;
-  int position;
-  int distance;
+  long position;
+  long distance;
   int type;
   int slot;
   int extId;
@@ -27,6 +27,7 @@ void runModule(int device)
           if(port == 0)
           {
             int speed_value = readShort(9);
+            Serial.println(speed_value);
             encoders[slot-1].runSpeed(speed_value);
           }
         }
@@ -36,10 +37,10 @@ void runModule(int device)
           if(port == 0)
           {
             int speed_value = readShort(9);
-            int distance_value = readShort(11);
+            distance = readLong(11);
             encoders[slot-1].setSpeed(speed_value);
             extId = readBuffer(3);
-            encoders[slot-1].move(distance_value,onEncoderMovingFinish,extId);
+            encoders[slot-1].move(distance,onEncoderMovingFinish,extId);
           }
         }
         break;
@@ -48,10 +49,10 @@ void runModule(int device)
           if(port == 0)
           {
             int speed_value = readShort(9);
-            int position_value = readShort(11);
+            position = readLong(11);
             encoders[slot-1].setSpeed(speed_value);
             extId = readBuffer(3);
-            encoders[slot-1].moveTo(position_value,onEncoderMovingFinish,extId);
+            encoders[slot-1].moveTo(position,onEncoderMovingFinish,extId);
           }
         }
         break;
@@ -78,14 +79,14 @@ void runModule(int device)
           break;
           case STEPPER_BOARD_MOVE:
             speed = readShort(8);
-            distance = readShort(10);
+            distance = readLong(10);
             extId = readBuffer(3);
             steppers[port-1].setSpeed(speed);
             steppers[port-1].move(distance,onStepperMovingFinish,extId);
           break;
           case STEPPER_BOARD_MOVE_TO:
             speed = readShort(8);
-            position = readShort(10);
+            position = readLong(10);
             extId = readBuffer(3);
             steppers[port-1].setSpeed(speed);
             steppers[port-1].moveTo(position,onStepperMovingFinish,extId);
@@ -117,6 +118,38 @@ void runModule(int device)
         else
         {
           led.setColor(r,g,b); 
+        }
+        led.show();
+      }
+      break;
+      
+    case RGBLED_DISPLAY:
+      {
+        slot = readBuffer(7);
+        int idx = readBuffer(8);
+        int r = readBuffer(9);
+        int g = readBuffer(10);
+        int b = readBuffer(11);
+        if(port != 0)
+        {
+          led.reset(port,slot);
+        }
+        if(idx>0)
+        {
+          led.setColorAt(idx-1,r,g,b); 
+        }
+        else
+        {
+          led.setColor(r,g,b); 
+        }
+      }
+      break;
+    case RGBLED_SHOW:
+      {
+        slot = readBuffer(7);
+        if(port != 0)
+        {
+          led.reset(port,slot);
         }
         led.show();
       }

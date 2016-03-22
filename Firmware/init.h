@@ -84,6 +84,8 @@ boolean isAvailable = false;
 #define PIRMOTION 15
 #define INFRARED 16
 #define LINEFOLLOWER 17
+#define RGBLED_DISPLAY 18
+#define RGBLED_SHOW 19
 #define SHUTTER 20
 #define LIMITSWITCH 21
 #define BUTTON 22

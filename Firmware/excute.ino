@@ -218,23 +218,23 @@ void runModule(int device)
         int action = readBuffer(7);
         if(action==1)
         {
-          int px = readBuffer(8);
-          int py = readBuffer(9);
+          int px = readBuffer(8)-128;
+          int py = readBuffer(9)-128;
           int len = readBuffer(10);
           char *s = readString(11,len);
           ledMx.drawStr(px,py,s);
         }
         else if(action==2)
         {
-          int px = readBuffer(8);
-          int py = readBuffer(9);
+          int px = readBuffer(8)-128;
+          int py = readBuffer(9)-128;
           uint8_t *ss = readUint8(10,16);
           ledMx.drawBitmap(px,py,16,ss);
         }
         else if(action==3)
         {
-          int point = readBuffer(8);
-          int hours = readBuffer(9);
+          int point = readBuffer(8)-128;
+          int hours = readBuffer(9)-128;
           int minutes = readBuffer(10);
           ledMx.showClock(hours,minutes,point);
         }

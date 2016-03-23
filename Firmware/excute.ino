@@ -237,6 +237,8 @@ void runModule(int device)
           int hours = readBuffer(9);
           int minutes = readBuffer(10);
           ledMx.showClock(hours,minutes,point);
+        }else if(action == 4){
+            ledMx.showNum(readFloat(8),3);
         }
       }
       break;

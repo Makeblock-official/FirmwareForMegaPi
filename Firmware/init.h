@@ -94,6 +94,7 @@ boolean isAvailable = false;
 #define GASSENSOR 25
 #define COMPASS 26
 #define TEMPERATURE_SENSOR_1 27
+#define ANGULAR_SENSOR 28
 #define DIGITAL 30
 #define ANALOG 31
 #define PWM 32

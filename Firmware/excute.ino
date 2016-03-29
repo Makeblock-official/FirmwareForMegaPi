@@ -237,7 +237,8 @@ void runModule(int device)
           int hours = readBuffer(9);
           int minutes = readBuffer(10);
           ledMx.showClock(hours,minutes,point);
-        }else if(action == 4){
+        }else if(action == 4)
+        {
             ledMx.showNum(readFloat(8),3);
         }
       }
@@ -520,6 +521,13 @@ void readSensor(int device)
         sendShort(GasData);
       }
       break;
+    case ANGULAR_SENSOR:
+    {
+        slot = readBuffer(7);
+        pin = slot==1?mePort[port].s1:mePort[port].s2;
+        sendShort(analogRead(pin));
+    }
+    break;
     case  GYRO:
       {
         int axis = readBuffer(7);

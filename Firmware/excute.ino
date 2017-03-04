@@ -40,7 +40,8 @@ void runModule(int device)
             distance = readLong(11);
             encoders[slot-1].setSpeed(speed_value);
             extId = readBuffer(3);
-            encoders[slot-1].move(distance,onEncoderMovingFinish,extId);
+            encoders[slot-1].move(distance,speed_value,extId,onEncoderMovingFinish);
+            
           }
         }
         break;
@@ -52,7 +53,7 @@ void runModule(int device)
             position = readLong(11);
             encoders[slot-1].setSpeed(speed_value);
             extId = readBuffer(3);
-            encoders[slot-1].moveTo(position,onEncoderMovingFinish,extId);
+            encoders[slot-1].moveTo(position,speed_value,extId,onEncoderMovingFinish);
           }
         }
         break;
@@ -593,12 +594,12 @@ void readSensor(int device)
           {
             case ENCODER_BOARD_POS:
             {
-              sendLong(encoders[slot-1].GetPulsePos());
+              sendLong(encoders[slot-1].getPulsePos());
             }
             break;
             case ENCODER_BOARD_SPEED:
             {
-              sendFloat(encoders[slot-1].GetCurrentSpeed());
+              sendFloat(encoders[slot-1].getCurrentSpeed());
             }
             break;
           }
@@ -644,10 +645,10 @@ void resetAll()
   encoders[1].setMotorPwm(0);
   encoders[2].setMotorPwm(0);
   encoders[3].setMotorPwm(0);
-  encoders[0].SetPulsePos(0);
-  encoders[1].SetPulsePos(0);
-  encoders[2].SetPulsePos(0);
-  encoders[3].SetPulsePos(0);
+  encoders[0].setPulsePos(0);
+  encoders[1].setPulsePos(0);
+  encoders[2].setPulsePos(0);
+  encoders[3].setPulsePos(0);
   PID_speed_left.Setpoint = 0;
   PID_speed_right.Setpoint = 0;
   dc.reset(M1);
